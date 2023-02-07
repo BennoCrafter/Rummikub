@@ -4,13 +4,11 @@ class Cards:
         self.colors_list = ["rot", "orange", "gelb", "grün"]
         self.all_cards = []
 
-
-
     def get_all_cards(self):
         for z in range(len(self.colors_list)):
             for i in range(len(self.numbers_list)):
                 self.all_cards.append(self.colors_list[z] + "," + str(self.numbers_list[i]))
-                self.all_cards.append(self.colors_list[z] + "," +str(self.numbers_list[i]))
+                self.all_cards.append(self.colors_list[z] + "," + str(self.numbers_list[i]))
 
 
 if __name__ == "__main__":

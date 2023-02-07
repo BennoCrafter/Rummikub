@@ -1,12 +1,16 @@
 # TODO
 
-## GUI
-
-## LOGIC
+# GUI
+## need gui
+- [ ] printing table new
+# LOGIC
 
 ### card table
 ### expand
+- [ ] chain move: fix with inserting in table
+- [ ] group move:
+- [ ] do expanding from scratch
 
-## ELSE
+### trade cards on table 
 
-
+## need trade cards 
