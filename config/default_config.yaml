@@ -1,0 +1,51 @@
+# Rummikub Game Configuration
+game:
+  name: "Rummikub"
+  version: "0.0.1"
+  max_players: 4
+  min_players: 2
+  initial_tiles_per_player: 13
+
+rules:
+  cheat_command_enabled: false
+  score_usage: true
+  joker_usage: true
+  joker_penalty: 30 # Points added to the player's score if a joker is left at the end of the game
+  initial_meld_value: 30 # Minimum value of the initial meld to be played
+  time_limit_per_turn: 120 # Time limit in seconds for each player's turn
+
+tiles:
+  sets:
+    - color: "red"
+      count: 2
+      range: [1, 13]
+    - color: "blue"
+      count: 2
+      range: [1, 13]
+    - color: "yellow"
+      count: 2
+      range: [1, 13]
+    - color: "green"
+      count: 2
+      range: [1, 13]
+  jokers: 2
+
+scoring:
+  meld:
+    group: 10 # Points for forming a valid group (3 or 4 tiles of the same number in different colors)
+    run: 15 # Points for forming a valid run (3 or more consecutive numbers in the same color)
+  penalty: 5 # Points deducted for invalid moves
+
+ai_players:
+  strategy: "normal" # Default strategy for AI players
+  strategies:
+    - name: "random"
+      description: "Makes random moves."
+    - name: "normal"
+      description: "Balances between scoring points and minimizing penalty."
+    - name: "greedy"
+      description: "Prioritizes moves that score the most points."
+
+file_saving:
+  save_game_on_exit: true
+  default_saving_path: "rummikub_save.json"
