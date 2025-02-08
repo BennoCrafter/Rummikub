@@ -30,5 +30,6 @@ class PullCommand(Command):
                 # if tileset empty remove it from board
                 execution.game.board.tilesets.remove(wntd_tileset)
             execution.game.current_player.add_tile_to_cache(tile)
-
-        return True, f"Tile {tile.colorize()} pulled from set {set_id}."
+            return True, f"Tile {tile.colorize()} pulled from set {set_id}."
+        else:
+            return False, f"Tile {tile.colorize()} is not in set {set_id}."

@@ -72,7 +72,10 @@ class Tileset:
     def has_same(sequence: list[str] | list[int]) -> bool:
         base = sequence[0]
         for element in sequence:
+            if element == "joker" or element == -1:
+                continue
             if base == "joker" or base == -1:
+                base = element
                 continue
             if element != base:
                 return False

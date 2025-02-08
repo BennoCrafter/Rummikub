@@ -14,6 +14,9 @@ def main_default() -> None:
 def main() -> None:
     game: Game = Game()
     ply_count = int(input("Enter the number of players: "))
+    if not ply_count in range(2, 5):
+        print("Invalid number of players. Must be between 2 and 4.")
+        return
     for i in range(ply_count):
         ply_name = input(f"Enter the name of player {i + 1}: ")
         game.register_player(ply_name)
