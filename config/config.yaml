@@ -29,22 +29,6 @@ tiles:
       - "green"
       - "red"
 
-scoring:
-  meld:
-    group: 10 # Points for forming a valid group (3 or 4 tiles of the same number in different colors)
-    run: 15 # Points for forming a valid run (3 or more consecutive numbers in the same color)
-  penalty: 5 # Points deducted for invalid moves
-
-ai_players:
-  strategy: "normal" # Default strategy for AI players
-  strategies:
-    - name: "random"
-      description: "Makes random moves."
-    - name: "normal"
-      description: "Balances between scoring points and minimizing penalty."
-    - name: "greedy"
-      description: "Prioritizes moves that score the most points."
-
 file_saving:
   save_game_on_exit: true
   default_saving_path: "rummikub_save.json"

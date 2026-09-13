@@ -10,7 +10,6 @@ class Pool:
         self.pool: list[Tile] = []
         self.config: dict[str, Any] = get_config()
         self.count_for_tile: int = 2
-        self.colors: list[str] = ["red", "yellow", "blue", "green"]
         self.generate_pool()
 
     def __str__(self) -> str:
@@ -20,9 +19,11 @@ class Pool:
         for set in self.config["tiles"]["sets"]:
             for num in range(set["range"][0], set["range"][1] + 1):
                 self.pool.extend([Tile(color=set["color"], number=num)] * set["count"])
+
         # add joker
-        for i in range(self.config["tiles"]["jokers"]["count"]):
-            self.pool.append(Tile(color="joker", number=-1))
+        if self.config["rules"]["joker_usage"]:
+            for i in range(self.config["tiles"]["jokers"]["count"]):
+                self.pool.append(Tile(color="joker", number=-1))
 
         shuffle(self.pool)
 
