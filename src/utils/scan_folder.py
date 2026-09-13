@@ -1,7 +1,7 @@
 import os
 
-def scan_folder(folder_name: str):
-    scanned_files = []
+def scan_folder(folder_name: str) -> list[str]:
+    scanned_files: list[str] = []
     for root, dirs, files in os.walk(folder_name):
         for file in files:
             if file.endswith(".py"):

@@ -1,5 +1,5 @@
-from src.Tileset import Tileset
-from src.Tile import Tile
+from src.tileset import Tileset
+from src.tile import Tile
 
 
 class PlayerInventory(Tileset):

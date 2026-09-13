@@ -1,16 +1,11 @@
-# Rummikub Game Configuration
 game:
-  name: "Rummikub"
-  version: "0.0.1"
-  max_players: 4
-  min_players: 2
   initial_tiles_per_player: 13
 
 rules:
   cheat_command_enabled: true
   score_usage: true
   joker_usage: true
-  joker_penalty: 30 # Points added to the player's score if a joker is left at the end of the game
+
   initial_meld_value: 30 # Minimum value of the initial meld to be played
   time_limit_per_turn: 120 # Time limit in seconds for each player's turn
 

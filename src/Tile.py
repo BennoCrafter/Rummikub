@@ -8,7 +8,7 @@ class Tile:
     def __str__(self) -> str:
         return f"{self.color},{self.number}"
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
         return isinstance(other, Tile) and self.color == other.color and self.number == other.number
 
     def __hash__(self) -> int:

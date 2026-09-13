@@ -1,7 +1,7 @@
-from src.Tile import Tile
-from src.commands.Command import Command
-from src.commands.Execution import Execution
+from src.commands.command import Command
+from src.commands.execution import Execution
 from src.utils.tile_name_to_tile import tile_name_to_tile
+
 
 class CheatCommand(Command):
     def execute(self, execution: Execution) -> tuple[bool, str]:

@@ -1,6 +1,5 @@
-from src.Tile import Tile
-from src.commands.Execution import Execution
-from src.commands.Command import Command
+from src.commands.command import Command
+from src.commands.execution import Execution
 from src.helper.type_helper import args_to_right_type
 
 
@@ -9,9 +8,14 @@ class SplitCommand(Command):
         if len(execution.command_args) < 2:
             return False, "Not enough arguments for put command. <set id> <position>"
 
-        status, conv_command_args = args_to_right_type(execution.command_args, [int, int])
+        status, conv_command_args = args_to_right_type(
+            execution.command_args, [int, int]
+        )
         if not status:
-            return False, f"You did not gave the right type for argument {len(conv_command_args)}"
+            return (
+                False,
+                f"You did not gave the right type for argument {len(conv_command_args)}",
+            )
 
         set_id, position = conv_command_args
 

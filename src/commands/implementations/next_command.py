@@ -1,5 +1,5 @@
-from src.commands.Command import Command
-from src.commands.Execution import Execution
+from src.commands.command import Command
+from src.commands.execution import Execution
 
 
 class NextCommand(Command):

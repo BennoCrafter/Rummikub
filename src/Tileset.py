@@ -1,4 +1,4 @@
-from src.Tile import Tile
+from src.tile import Tile
 
 class Tileset:
     """

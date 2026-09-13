@@ -1,25 +1,23 @@
-from src.Pool import Pool
-from src.Tile import Tile
-from src.Tileset import Tileset
-from src.commands.CommandManager import CommandManager
+from src.pool import Pool
+from src.tile import Tile
+from src.tileset import Tileset
 
-from src.commands.implementations import *
 
 class Board:
-    def __init__(self, tilesets: list[Tileset]=[], pool=Pool()) -> None:
+    def __init__(self, tilesets: list[Tileset] = [], pool: Pool = Pool()) -> None:
         self.tilesets: list[Tileset] = tilesets
-        self.pool = pool
+        self.pool: Pool = pool
 
     def __str__(self) -> str:
         return self.prettify_board()
 
     def prettify_board(self) -> str:
-        out = ''
+        out = ""
         for index, tileset in enumerate(self.tilesets):
-            out += f'Set {index}:'
+            out += f"Set {index}:"
             for tile in tileset.tiles:
-                out += f' {tile.colorize()}'
-            out += '\n'
+                out += f" {tile.colorize()}"
+            out += "\n"
         return out
 
     def is_valid(self) -> bool:

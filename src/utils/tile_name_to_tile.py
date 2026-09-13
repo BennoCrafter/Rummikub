@@ -1,4 +1,4 @@
-from src.Tile import Tile
+from src.tile import Tile
 from src.const import ABRV_TO_COLOR
 
 def tile_name_to_tile(tile_name: str) -> tuple[bool, Tile]:

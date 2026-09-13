@@ -1,26 +1,37 @@
-import readline
 from importlib import util
 
 if not util.find_spec("readline"):
     print("Module readline not available on this machine.")
 
-from src.const import COLOR_CODES
-from src.Board import Board
-from src.Player import Player
-from src.Bot import Bot
-from src.PlayerInventory import PlayerInventory
-from src.Tileset import Tileset
-from src.Tile import Tile
-from src.commands.CommandManager import CommandManager
-from src.commands.implementations import *
+from typing import Any
+
 from config.config_loader import get_config
+from src.board import Board
+from src.bot import Bot
+from src.commands.command_manager import CommandManager
+from src.commands.implementations import (
+    CheatCommand,
+    CreateCommand,
+    DrawCommand,
+    HelpCommand,
+    NextCommand,
+    PullCommand,
+    PutCommand,
+    QuitCommand,
+    SplitCommand,
+)
+from src.const import COLOR_CODES
+from src.player import Player
+from src.player_inventory import PlayerInventory
+from src.tile import Tile
+from src.tileset import Tileset
 
 
 class Game:
-    def __init__(self, players=None):
+    def __init__(self, players: list[Player] | None = None) -> None:
         if players is None:
             players = []
-        self.config = get_config()
+        self.config: dict[str, Any] = get_config()
         self.players: list[Player] = players
         self.board: Board = Board()
         self.running: bool = True
@@ -30,10 +41,21 @@ class Game:
     def initialize_command_manager(self) -> CommandManager:
         commands = [
             DrawCommand("draw", "Draw a tile from the pool"),
-            PullCommand("pull", "Pull a tile from a tileset. Usage: pull <tileset_id> <tile_name>"),
-            PutCommand("put", "Put a tile from your inventory to a tileset. Usage: put <tileset_id> <tile_name>"),
-            CreateCommand("create", "Create a new tileset. Usage: create <tile_name> <tile_name> ..."),
-            SplitCommand("split", "Split a tileset. Usage: split <tileset_id> <position>"),
+            PullCommand(
+                "pull",
+                "Pull a tile from a tileset. Usage: pull <tileset_id> <tile_name>",
+            ),
+            PutCommand(
+                "put",
+                "Put a tile from your inventory to a tileset. Usage: put <tileset_id> <tile_name>",
+            ),
+            CreateCommand(
+                "create",
+                "Create a new tileset. Usage: create <tile_name> <tile_name> ...",
+            ),
+            SplitCommand(
+                "split", "Split a tileset. Usage: split <tileset_id> <position>"
+            ),
             HelpCommand("help", "Display the help message"),
             NextCommand("next", "End your turn"),
             QuitCommand("quit", "Quit the game"),
@@ -50,15 +72,21 @@ class Game:
         self.print_tui()
 
     def display_turn_message(self) -> None:
-        print(f"{COLOR_CODES['blue']}It's your turn: {self.current_player.name}{COLOR_CODES['reset']}")
+        print(
+            f"{COLOR_CODES['blue']}It's your turn: {self.current_player.name}{COLOR_CODES['reset']}"
+        )
 
     def print_tui(self) -> None:
         print(self.board)
-        print(f"{COLOR_CODES['green']}Your ({self.current_player}) inventory: \n{self.current_player.inventory}{COLOR_CODES['reset']}")
+        print(
+            f"{COLOR_CODES['green']}Your ({self.current_player}) inventory: \n{self.current_player.inventory}{COLOR_CODES['reset']}"
+        )
 
     def check_win(self) -> None:
         if self.current_player.has_won():
-            print(f"{COLOR_CODES['green']}Congratulations {self.current_player.name}! You won the game!{COLOR_CODES['reset']}")
+            print(
+                f"{COLOR_CODES['green']}Congratulations {self.current_player.name}! You won the game!{COLOR_CODES['reset']}"
+            )
             self.running = False
             exit(0)
 
@@ -79,31 +107,44 @@ class Game:
         self.handle_command_result(success, message)
 
     def display_tiles_cache(self) -> None:
-        print(f"Your tiles cache: {' '.join(t.colorize() for t in self.current_player.tiles_cache)}")
+        print(
+            f"Your tiles cache: {' '.join(t.colorize() for t in self.current_player.tiles_cache)}"
+        )
 
-    def handle_command_result(self, success: bool, message: str):
-        command = message
+    def handle_command_result(self, success: bool, message: str) -> None:
         self.print_tui()
         self.display_command_result(success, message)
 
     def handle_next_command(self) -> tuple[bool, str]:
         if not self.board.is_valid():
-            return False, f"{COLOR_CODES['red']}Invalid board state.{COLOR_CODES['reset']}"
+            return (
+                False,
+                f"{COLOR_CODES['red']}Invalid board state.{COLOR_CODES['reset']}",
+            )
         if not self.current_player.tiles_cache_is_empty():
-            return False, f"{COLOR_CODES['red']}Your tiles cache is not empty!{COLOR_CODES['reset']}"
+            return (
+                False,
+                f"{COLOR_CODES['red']}Your tiles cache is not empty!{COLOR_CODES['reset']}",
+            )
         self.check_win()
         self.next_player()
         return True, ""
 
-    def display_command_result(self, success: bool, message: str):
+    def display_command_result(self, success: bool, message: str) -> None:
         color = COLOR_CODES["green"] if success else COLOR_CODES["red"]
         print(f"\n{color}{message}{COLOR_CODES['reset']}")
 
     def register_player(self, player_name: str) -> None:
-        self.players.append(Player(player_name, PlayerInventory(self.board.pool.generate_pool_for_player())))
+        self.players.append(
+            Player(
+                player_name, PlayerInventory(self.board.pool.generate_pool_for_player())
+            )
+        )
 
     def register_bot(self, bot_name: str) -> None:
-        self.players.append(Bot(bot_name, PlayerInventory(self.board.pool.generate_pool_for_player())))
+        self.players.append(
+            Bot(bot_name, PlayerInventory(self.board.pool.generate_pool_for_player()))
+        )
 
     def next_player(self) -> None:
         self.players.append(self.players.pop(0))
@@ -114,17 +155,19 @@ class Game:
             if not success:
                 self.throw_error(msg)
 
-    def rollback(self):
+    def rollback(self) -> None:
         pass
 
-    def throw_error(self, msg: str, is_critical: bool=False) -> None:
+    def throw_error(self, msg: str, is_critical: bool = False) -> None:
         print(f"Error: {msg}")
         if is_critical:
             exit(1)
 
+
 # Example usage
 if __name__ == "__main__":
-    def call_example():
+
+    def call_example() -> None:
         board_tiles = [
             Tileset([Tile("red", 3), Tile("yellow", 3), Tile("blue", 3)]),
             Tileset([Tile("red", 2), Tile("red", 3), Tile("red", 4), Tile("red", 5)]),

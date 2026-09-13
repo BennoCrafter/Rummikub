@@ -1,7 +1,7 @@
-from src.commands.Execution import Execution
+from src.commands.execution import Execution
 
 class Command:
-    def __init__(self, name: str, description: str="No description provided."):
+    def __init__(self, name: str, description: str = "No description provided.") -> None:
         self.name: str = name
         self.description: str = description
 
